@@ -21,6 +21,9 @@ on:
       - poetry.lock
       - pyproject.toml
       - '**.ipynb'
+  workflow_dispatch: # This adds the manual trigger
+
+
 
 jobs:
   run-code-check:
