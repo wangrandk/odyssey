@@ -155,5 +155,5 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
-.set-a/
+set-a/**
 .python-version
