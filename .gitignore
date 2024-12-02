@@ -2,7 +2,8 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
+physionet.org/
+*.ndjson
 # C extensions
 *.so
 
