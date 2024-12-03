@@ -8,13 +8,13 @@ from typing import Any, Dict, List, Optional
 
 import numpy as np
 import pandas as pd
-from fhir.resources.condition import Condition
-from fhir.resources.encounter import Encounter
-from fhir.resources.medication import Medication
-from fhir.resources.medicationrequest import MedicationRequest
-from fhir.resources.observation import Observation
-from fhir.resources.patient import Patient
-from fhir.resources.procedure import Procedure
+# from fhir.resources.condition import Condition
+# from fhir.resources.encounter import Encounter
+# from fhir.resources.medication import Medication
+# from fhir.resources.medicationrequest import MedicationRequest
+# from fhir.resources.observation import Observation
+# from fhir.resources.patient import Patient
+# from fhir.resources.procedure import Procedure
 from sqlalchemy import MetaData, Table, create_engine, select
 from tqdm import tqdm
 

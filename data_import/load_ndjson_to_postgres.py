@@ -2,14 +2,30 @@ import json
 import os
 
 import pandas as pd
+from urllib.parse import quote_plus
 from sqlalchemy import create_engine
 
+db_host = os.getenv('DB_HOST', 'localhost')
+db_port = os.getenv('DB_PORT', '5432')
+db_name = os.getenv('DB_NAME', 'mimiciv_fhir')
+db_user = os.getenv('DB_USER', 'ran')
+db_password = os.getenv('DB_PASSWORD', 'M@mba12345678')
 
-engine = create_engine(
-    "postgresql://postgres:Ks%404374296342@localhost:5432/mimiciv_fhir"
-)
+# URL-encode the password
+encoded_password = quote_plus(db_password)
 
-data_dir = "/home/kiarash/workspace/Clones/odyssey/physionet.org/files/mimic-iv-fhir-demo/2.0/mimic-fhir"
+# Construct the connection string
+connection_string = f"postgresql://{db_user}:{encoded_password}@{db_host}:{db_port}/{db_name}"
+
+# Create the engine
+engine = create_engine(connection_string)
+
+# engine = create_engine(
+#     "postgresql://ran:'M@mba12345678'@localhost:5432/mimiciv_fhir"
+# )
+
+data_dir = "./physionet.org/files/mimic-iv-fhir-demo/2.0/mimic-fhir"
+             
 
 
 def flatten_data(data):
@@ -35,9 +51,9 @@ files_to_tables = {
     "Encounter.ndjson": "encounter",
     "Medication.ndjson": "medication",
     "MedicationAdministration.ndjson": "medication_administration",
-    "MedicationRequest.ndjson": "medication_request",
-    "ObservationChartevents.ndjson": "observation_chartevents",
-    "ObservationLabevents.ndjson": "observation_labevents",
+    # "MedicationRequest.ndjson": "medication_request",
+    # "ObservationChartevents.ndjson": "observation_chartevents",
+    # "ObservationLabevents.ndjson": "observation_labevents",
     "Patient.ndjson": "patient",
     "Procedure.ndjson": "procedure",
 }
