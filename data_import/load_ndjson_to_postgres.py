@@ -3,7 +3,7 @@ import os
 
 import pandas as pd
 from urllib.parse import quote_plus
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 
 db_host = os.getenv('DB_HOST', 'localhost')
 db_port = os.getenv('DB_PORT', '5432')
@@ -38,7 +38,7 @@ def flatten_data(data):
 
 
 def load_ndjson_to_db(file_path, table_name):
-    with open(file_path, "r") as f:
+    with open(file_path, "r", encoding='utf-8', errors='replace') as f:
         data = [json.loads(line) for line in f]
         data = flatten_data(data)
     df = pd.json_normalize(data)
@@ -64,3 +64,20 @@ for file_name, table_name in files_to_tables.items():
         load_ndjson_to_db(file_path, table_name)
     else:
         print(f"File {file_name} not found in {data_dir}")
+
+
+# Connect to the database and list all tables
+with engine.connect() as connection:
+    # List all tables
+    result = connection.execute(text("SELECT table_name FROM information_schema.tables WHERE table_schema='public'"))
+    tables = result.fetchall()
+    print("List of tables in the database:")
+    for table in tables:
+        print(table[0])
+
+    # Print top 10 rows of the condition table
+    result = connection.execute(text('SELECT * FROM "condition" LIMIT 10'))
+    condition_rows = result.fetchall()
+    print("\nTop 10 rows of the condition table:")
+    for row in condition_rows:
+        print(row)
